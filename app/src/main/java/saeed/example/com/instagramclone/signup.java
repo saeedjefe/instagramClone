@@ -81,6 +81,9 @@ public class signup extends AppCompatActivity implements View.OnClickListener{
                             FancyToast.makeText( signup.this,  "narridi", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, true ).show();
 
 
+                            FancyToast.makeText( signup.this,  "narridi", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, true ).show();
+
+
                         }
 
                         else
