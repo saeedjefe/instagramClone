@@ -16,13 +16,16 @@ import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class signup extends AppCompatActivity implements View.OnClickListener{
 
     EditText edtName, edtPunchSpeed, edtKickSpeed, edtKickPower;
-    Button btnSave, btnGetAllData;
+    Button btnSave, btnGetAllData, btnTransition;
     TextView textView;
+
+    String together = "";
 
 
     @Override
@@ -41,36 +44,56 @@ public class signup extends AppCompatActivity implements View.OnClickListener{
 
         btnGetAllData = findViewById( R.id.btnGetAllData );
 
+        btnTransition = findViewById( R.id.btnTransition );
+
+        btnTransition.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        } );
+
+
         btnGetAllData.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseQuery<ParseObject>  parseQuery = ParseQuery.getQuery( "kickBoxer" );
+                final ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery( "kickBoxer" );
+                parseQuery.whereGreaterThanOrEqualTo( "puchSpeed", 987 );
+
                 parseQuery.findInBackground( new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
-                        if(e==null)
+                        if(objects.size()>0)
                         {
-                            if(objects.size()>0)
+                            for(ParseObject parseObject: objects)
                             {
-                                FancyToast.makeText( signup.this,  "narridi", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, true ).show();
-
+                                 together += parseObject.get( "name" )+"\t";
                             }
-
-                        }
-                        else
-                        {
+                            textView.setText( together );
                             FancyToast.makeText( signup.this,  "narridi", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, true ).show();
 
+
+
                         }
+                        else {
+
+                            FancyToast.makeText( signup.this,  "ridi", FancyToast.LENGTH_LONG, FancyToast.ERROR, true ).show();
+
+
+                        }
+
                     }
                 } );
             }
         } );
 
+
         textView.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final ParseQuery<ParseObject>  parseQuery = ParseQuery.getQuery( "kickBoxer" );
+
+                parseQuery.whereGreaterThanOrEqualTo( "punchSpeed", 987 );
                 parseQuery.getInBackground( "iXpTODfCCd", new GetCallback<ParseObject>() {
                     @Override
                     public void done(ParseObject object, ParseException e) {
